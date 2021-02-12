@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://gems.com/gems"
+        xmlns:tns="http://gems.com/gems"
+        elementFormDefault="qualified">
+
+    <element name="gem" type="tns:GemType" abstract="true"/>
+    <element name="precious-stone" type="tns:PreciousStoneType" substitutionGroup="tns:gem"/>
+    <element name="semiprecious-stone" type="tns:SemipreciousStoneType" substitutionGroup="tns:gem"/>
+
+    <element name="gems">
+        <complexType>
+            <sequence>
+                <element ref="tns:gem" maxOccurs="unbounded"/>
+            </sequence>
+        </complexType>
+    </element>
+
+    <complexType name="GemType">
+        <sequence>
+            <element name="name">
+                <simpleType>
+                    <restriction base="string">
+                        <minLength value="3"/>
+                        <maxLength value="50"/>
+                    </restriction>
+                </simpleType>
+            </element>
+            <element name="extraction-place">
+                <simpleType>
+                    <restriction base="string">
+                        <minLength value="3"/>
+                        <maxLength value="50"/>
+                    </restriction>
+                </simpleType>
+            </element>
+            <element name="visual-parameters" type="tns:VisualParameters"/>
+        </sequence>
+        <attribute name="certificate-number" use="required">
+            <simpleType>
+                <restriction base="ID">
+                    <pattern value="(\\d){4,19}"/>
+                </restriction>
+            </simpleType>
+        </attribute>
+    </complexType>
+
+    <complexType name="PreciousStoneType">
+        <complexContent>
+            <extension base="tns:GemType">
+                <sequence>
+                    <element name="origin-type">
+                        <simpleType>
+                            <restriction base="string">
+                                <enumeration value="ORGANIC"/>
+                                <enumeration value="MINERAL"/>
+                            </restriction>
+                        </simpleType>
+                    </element>
+                    <element name="carats" type="double" default="0"/>
+                </sequence>
+            </extension>
+        </complexContent>
+    </complexType>
+
+    <complexType name="SemipreciousStoneType">
+        <complexContent>
+            <extension base="tns:GemType">
+                <sequence>
+                    <element name="weight" type="double"/>
+                </sequence>
+                <attribute name="ornamental-type" use="required" default="0">
+                    <simpleType>
+                        <restriction base="positiveInteger">
+                            <pattern value="[1-3]"/>
+                        </restriction>
+                    </simpleType>
+                </attribute>
+            </extension>
+        </complexContent>
+    </complexType>
+
+    <complexType name="VisualParameters">
+        <sequence>
+            <element name="color" type="string"/>
+            <element name="transparent-type" default="NOT_DETERMINED">
+                <simpleType>
+                    <restriction base="string">
+                        <enumeration value="TRANSPARENT"/>
+                        <enumeration value="SEMI_TRANSPARENT"/>
+                        <enumeration value="INTRANSPARENT"/>
+                        <enumeration value="NOT_DETERMINED"/>
+                    </restriction>
+                </simpleType>
+            </element>
+        </sequence>
+        <attribute name="stone-planes" type="positiveInteger"/>
+    </complexType>
+
+</schema>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gems xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:tns="http://gems.com/gems"
+      xsi:schemaLocation="http://gems.com/gems gems.xsd">
+    <precious-stone certificate-number="31563333333331">
+        <name>Rubine</name>
+        <extraction-place>Southern Urals</extraction-place>
+        <visual-parameters stone-planes="0">
+            <color>red-pink</color>
+            <transparent-type>TRANSPARENT</transparent-type>
+        </visual-parameters>
+        <origin-type>MINERAL</origin-type>
+        <carats>10</carats>
+    </precious-stone>
+
+    <precious-stone certificate-number="3023455">
+        <name>Sapphire</name>
+        <extraction-place>Madagascar</extraction-place>
+        <visual-parameters stone-planes="24">
+            <color>dark blue</color>
+            <transparent-type>SEMI_TRANSPARENT</transparent-type>
+        </visual-parameters>
+        <origin-type>MINERAL</origin-type>
+        <carats>8</carats>
+    </precious-stone>
+
+    <semiprecious-stone certificate-number="259876322222" ornamental-type="2">
+        <name>Amethyst</name>
+        <extraction-place>Kola Peninsula</extraction-place>
+        <visual-parameters stone-planes="12">
+            <color>violet</color>
+            <transparent-type>TRANSPARENT</transparent-type>
+        </visual-parameters>
+        <weight>5</weight>
+    </semiprecious-stone>
+
+    <semiprecious-stone certificate-number="252528869" ornamental-type="1">
+        <name>Garnet</name>
+        <extraction-place>Kola Peninsula</extraction-place>
+        <visual-parameters stone-planes="0">
+            <color>red</color>
+            <transparent-type>NOT_DETERMINED</transparent-type>
+        </visual-parameters>
+        <weight>10</weight>
+    </semiprecious-stone>
+</gems>
