@@ -8,7 +8,7 @@ public abstract class Gem {
     private VisualParameters visualParameters = new VisualParameters();
 
     public Gem() {
-    } // необходим будет для маршаллизации/демаршалиизации XML
+    }
 
     public Gem(long certificateNumber, String name, String extractionPlace, VisualParameters visualParameters) {
         this.certificateNumber = certificateNumber;
