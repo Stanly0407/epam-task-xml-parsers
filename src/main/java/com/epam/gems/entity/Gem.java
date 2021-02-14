@@ -1,27 +1,46 @@
 package com.epam.gems.entity;
 
+import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.util.Objects;
 
+
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "Gem", propOrder = {
+        "certificateNumber",
+        "name",
+        "extractionPlace",
+        "visualParameters"
+})
 public abstract class Gem {
-    private long certificateNumber;
+    @XmlAttribute(required = true)
+    @XmlID
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    private String certificateNumber;
+    @XmlElement(required = true)
     private String name;
+    @XmlElement(required = true)
     private String extractionPlace;
+    @XmlElement(required = true)
     private VisualParameters visualParameters = new VisualParameters();
 
     public Gem() {
     }
 
-    public Gem(long certificateNumber, String name, String extractionPlace, VisualParameters visualParameters) {
+    public Gem(String certificateNumber, String name, String extractionPlace, VisualParameters visualParameters) {
         this.certificateNumber = certificateNumber;
         this.name = name;
         this.extractionPlace = extractionPlace;
         this.visualParameters = visualParameters;
     }
 
-    public long getCertificateNumber() {
+    public String  getCertificateNumber() {
         return certificateNumber;
     }
 
-    public void setCertificateNumber(long certificateNumber) {
+    public void setCertificateNumber(String certificateNumber) {
         this.certificateNumber = certificateNumber;
     }
 
@@ -50,61 +69,29 @@ public abstract class Gem {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) {return true;}
+        if (o == null || getClass() != o.getClass()) {return false;}
+        Gem gem = (Gem) o;
+        return Objects.equals(certificateNumber, gem.certificateNumber) &&
+                Objects.equals(name, gem.name) &&
+                Objects.equals(extractionPlace, gem.extractionPlace) &&
+                Objects.equals(visualParameters, gem.visualParameters);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(certificateNumber, name, extractionPlace, visualParameters);
+    }
+
+
+    @Override
     public String toString() {
         return "Gem{" +
-                "certificateNumber=" + certificateNumber +
+                "certificateNumber='" + certificateNumber + '\'' +
                 ", name='" + name + '\'' +
                 ", extractionPlace='" + extractionPlace + '\'' +
                 ", visualParameters=" + visualParameters +
                 '}';
-    }
-
-
-    public static class VisualParameters {
-        private String color;
-        private TransparentType transparentType;
-        private int stonePlanes;
-
-        public VisualParameters() {
-        }
-
-        public VisualParameters(String color, TransparentType transparentType, int stonePlanes) {
-            this.color = color;
-            this.transparentType = transparentType;
-            this.stonePlanes = stonePlanes;
-        }
-
-        public String getColor() {
-            return color;
-        }
-
-        public void setColor(String color) {
-            this.color = color;
-        }
-
-        public TransparentType getTransparentType() {
-            return transparentType;
-        }
-
-        public void setTransparentType(TransparentType transparentType) {
-            this.transparentType = transparentType;
-        }
-
-        public int getStonePlanes() {
-            return stonePlanes;
-        }
-
-        public void setStonePlanes(int stonePlanes) {
-            this.stonePlanes = stonePlanes;
-        }
-
-        @Override
-        public String toString() {
-            return "VisualParameters{" +
-                    "color='" + color + '\'' +
-                    ", transparentType=" + transparentType +
-                    ", stonePlanes=" + stonePlanes +
-                    '}';
-        }
     }
 }

@@ -4,9 +4,9 @@
         xmlns:tns="http://gems.com/gems"
         elementFormDefault="qualified">
 
-    <element name="gem" type="tns:GemType" abstract="true"/>
-    <element name="precious-stone" type="tns:PreciousStoneType" substitutionGroup="tns:gem"/>
-    <element name="semiprecious-stone" type="tns:SemipreciousStoneType" substitutionGroup="tns:gem"/>
+    <element name="gem" type="tns:Gem" abstract="true"/>
+    <element name="precious-stone" type="tns:PreciousStone" substitutionGroup="tns:gem"/>
+    <element name="semiprecious-stone" type="tns:SemipreciousStone" substitutionGroup="tns:gem"/>
 
     <element name="gems">
         <complexType>
@@ -16,7 +16,7 @@
         </complexType>
     </element>
 
-    <complexType name="GemType">
+    <complexType name="Gem">
         <sequence>
             <element name="name">
                 <simpleType>
@@ -45,9 +45,9 @@
         </attribute>
     </complexType>
 
-    <complexType name="PreciousStoneType">
+    <complexType name="PreciousStone">
         <complexContent>
-            <extension base="tns:GemType">
+            <extension base="tns:Gem">
                 <sequence>
                     <element name="origin-type">
                         <simpleType>
@@ -63,13 +63,13 @@
         </complexContent>
     </complexType>
 
-    <complexType name="SemipreciousStoneType">
+    <complexType name="SemipreciousStone">
         <complexContent>
-            <extension base="tns:GemType">
+            <extension base="tns:Gem">
                 <sequence>
                     <element name="weight" type="double"/>
                 </sequence>
-                <attribute name="ornamental-type" use="required" default="0">
+                <attribute name="ornamental-type" use="optional">
                     <simpleType>
                         <restriction base="positiveInteger">
                             <pattern value="[1-3]"/>

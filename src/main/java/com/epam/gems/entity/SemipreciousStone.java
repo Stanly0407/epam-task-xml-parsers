@@ -1,8 +1,18 @@
 package com.epam.gems.entity;
 
-public class SemipreciousStone extends Gem {
+import javax.xml.bind.annotation.*;
 
+
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "SemipreciousStone", propOrder = {
+        "weight",
+        "ornamentalType"
+})
+public class SemipreciousStone extends Gem {
+    @XmlElement(required = true)
     private double weight;
+    @XmlElement
     private int ornamentalType;
 
     public SemipreciousStone() { }
@@ -12,7 +22,7 @@ public class SemipreciousStone extends Gem {
         this.ornamentalType = ornamentalType;
     }
 
-    public SemipreciousStone(long certificateNumber, String name, String extractionPlace, VisualParameters visualParameters, double weight, int ornamentalType) {
+    public SemipreciousStone(String certificateNumber, String name, String extractionPlace, VisualParameters visualParameters, double weight, int ornamentalType) {
         super(certificateNumber, name, extractionPlace, visualParameters);
         this.weight = weight;
         this.ornamentalType = ornamentalType;
