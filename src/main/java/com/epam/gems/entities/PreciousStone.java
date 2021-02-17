@@ -1,20 +1,23 @@
-package com.epam.gems.entity;
+package com.epam.gems.entities;
 
-
-import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
 import java.util.Objects;
 
-@XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "PreciousStone", propOrder = {
-        "originType",
-        "carats"
-})
+@XmlType(name = "PreciousStone",
+        propOrder = {"originType", "carats"})
 public class PreciousStone extends Gem {
-    @XmlElement(required = true)
+
+    @XmlElement(required = true, name = "origin-type")
     private OriginType originType;
-    @XmlElement(required = true)
+
+    @XmlElement(required = true, name = "carats")
     private double carats;
+
+    private static final String ID_QUALIFIER_PRECIOUS = "PS";
 
     public PreciousStone() {
     }
@@ -24,7 +27,8 @@ public class PreciousStone extends Gem {
         this.carats = carats;
     }
 
-    public PreciousStone(String certificateNumber, String name, String extractionPlace, VisualParameters visualParameters, OriginType originType, double carats) {
+    public PreciousStone(String certificateNumber, String name, String extractionPlace, VisualParameters visualParameters,
+                         OriginType originType, double carats) {
         super(certificateNumber, name, extractionPlace, visualParameters);
         this.originType = originType;
         this.carats = carats;
@@ -47,6 +51,11 @@ public class PreciousStone extends Gem {
     }
 
     @Override
+    public void setCertificateNumber(String certificateNumber) {
+        super.setCertificateNumber(ID_QUALIFIER_PRECIOUS + certificateNumber);
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -64,11 +73,4 @@ public class PreciousStone extends Gem {
         return Objects.hash(originType, carats);
     }
 
-    @Override
-    public String toString() {
-        return "PreciousStone{" +
-                "originType=" + originType +
-                ", carats=" + carats +
-                '}';
-    }
 }

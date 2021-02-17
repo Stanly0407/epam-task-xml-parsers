@@ -1,45 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gems xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xmlns:tns="http://gems.com/gems"
+      xmlns="http://gems.com/gems"
       xsi:schemaLocation="http://gems.com/gems gems.xsd">
-    <precious-stone certificate-number="3DP33333LO3331">
+
+    <precious-stone certificate-number="PS3333O333PLP">
         <name>Rubine</name>
         <extraction-place>Southern Urals</extraction-place>
-        <visual-parameters stone-planes="0">
+        <visual-parameters>
             <color>red-pink</color>
             <transparent-type>TRANSPARENT</transparent-type>
+            <stone-planes>36</stone-planes>
         </visual-parameters>
         <origin-type>MINERAL</origin-type>
         <carats>10</carats>
     </precious-stone>
 
-    <precious-stone certificate-number="3PLM023455">
+    <precious-stone certificate-number="PS-G3PLM023455">
         <name>Sapphire</name>
         <extraction-place>Madagascar</extraction-place>
-        <visual-parameters stone-planes="24">
+        <visual-parameters>
             <color>dark blue</color>
             <transparent-type>SEMI_TRANSPARENT</transparent-type>
+            <stone-planes>24</stone-planes>
         </visual-parameters>
         <origin-type>MINERAL</origin-type>
         <carats>8</carats>
     </precious-stone>
 
-    <semiprecious-stone certificate-number="25987632222PPL2" ornamental-type="2">
+    <semiprecious-stone certificate-number="SPS2598PPL2" ornamental-type="2">
         <name>Amethyst</name>
         <extraction-place>Kola Peninsula</extraction-place>
-        <visual-parameters stone-planes="12">
+        <visual-parameters>
             <color>violet</color>
             <transparent-type>TRANSPARENT</transparent-type>
+            <stone-planes>12</stone-planes>
         </visual-parameters>
         <weight>5</weight>
     </semiprecious-stone>
 
-    <semiprecious-stone certificate-number="2525L2886P9" ornamental-type="1">
+    <semiprecious-stone certificate-number="SPS2525L2886P9" ornamental-type="1">
         <name>Garnet</name>
         <extraction-place>Kola Peninsula</extraction-place>
-        <visual-parameters stone-planes="0">
+        <visual-parameters>
             <color>red</color>
             <transparent-type>NOT_DETERMINED</transparent-type>
+            <stone-planes>54</stone-planes>
         </visual-parameters>
         <weight>10</weight>
     </semiprecious-stone>

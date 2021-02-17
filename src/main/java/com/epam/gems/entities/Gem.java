@@ -1,4 +1,4 @@
-package com.epam.gems.entity;
+package com.epam.gems.entities;
 
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
@@ -8,22 +8,23 @@ import java.util.Objects;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Gem", propOrder = {
-        "certificateNumber",
-        "name",
-        "extractionPlace",
-        "visualParameters"
-})
-public abstract class Gem {
-    @XmlAttribute(required = true)
+@XmlType(name = "Gem",
+        propOrder = {"certificateNumber", "name", "extractionPlace", "visualParameters"})
+@XmlSeeAlso({PreciousStone.class, SemipreciousStone.class})
+public class Gem {
+
+    @XmlAttribute(required = true, name = "certificate-number")
     @XmlID
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     private String certificateNumber;
-    @XmlElement(required = true)
+
+    @XmlElement(required = true, name = "name")
     private String name;
-    @XmlElement(required = true)
+
+    @XmlElement(required = true, name = "extraction-place")
     private String extractionPlace;
-    @XmlElement(required = true)
+
+    @XmlElement(required = true, name = "visual-parameters")
     private VisualParameters visualParameters = new VisualParameters();
 
     public Gem() {
@@ -36,7 +37,7 @@ public abstract class Gem {
         this.visualParameters = visualParameters;
     }
 
-    public String  getCertificateNumber() {
+    public String getCertificateNumber() {
         return certificateNumber;
     }
 
@@ -70,8 +71,12 @@ public abstract class Gem {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {return true;}
-        if (o == null || getClass() != o.getClass()) {return false;}
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Gem gem = (Gem) o;
         return Objects.equals(certificateNumber, gem.certificateNumber) &&
                 Objects.equals(name, gem.name) &&
@@ -84,14 +89,4 @@ public abstract class Gem {
         return Objects.hash(certificateNumber, name, extractionPlace, visualParameters);
     }
 
-
-    @Override
-    public String toString() {
-        return "Gem{" +
-                "certificateNumber='" + certificateNumber + '\'' +
-                ", name='" + name + '\'' +
-                ", extractionPlace='" + extractionPlace + '\'' +
-                ", visualParameters=" + visualParameters +
-                '}';
-    }
 }

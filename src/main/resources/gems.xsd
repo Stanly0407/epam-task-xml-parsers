@@ -36,12 +36,7 @@
             </element>
             <element name="visual-parameters" type="tns:VisualParameters"/>
         </sequence>
-        <attribute name="certificate-number" use="required">
-            <simpleType>
-                <restriction base="ID">
-                    <pattern value="(\\d){4,19}"/>
-                </restriction>
-            </simpleType>
+        <attribute name="certificate-number" type="ID" use="required">
         </attribute>
     </complexType>
 
@@ -93,8 +88,8 @@
                     </restriction>
                 </simpleType>
             </element>
+            <element name="stone-planes" type="positiveInteger"/>
         </sequence>
-        <attribute name="stone-planes" type="positiveInteger"/>
     </complexType>
 
 </schema>

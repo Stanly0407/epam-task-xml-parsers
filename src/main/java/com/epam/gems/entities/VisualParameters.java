@@ -1,21 +1,20 @@
-package com.epam.gems.entity;
+package com.epam.gems.entities;
 
 import javax.xml.bind.annotation.*;
 import java.util.Objects;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "PreciousStone", propOrder = {
-        "color",
-        "transparentType",
-        "stonePlanes"
-})
+@XmlType(name = "VisualParameters", propOrder = {"color", "transparentType", "stonePlanes"})
 public class VisualParameters {
-    @XmlElement(required = true)
+
+    @XmlElement(required = true, name = "color")
     private String color;
-    @XmlElement(required = true)
+
+    @XmlElement(required = true, name = "transparent-type")
     private TransparentType transparentType;
-    @XmlElement(required = true)
+
+    @XmlElement(required = true, name = "stone-planes")
     private int stonePlanes;
 
     public VisualParameters() {
@@ -53,8 +52,12 @@ public class VisualParameters {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {return true;}
-        if (o == null || getClass() != o.getClass()) {return false;}
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         VisualParameters that = (VisualParameters) o;
         return stonePlanes == that.stonePlanes &&
                 Objects.equals(color, that.color) &&
@@ -66,12 +69,4 @@ public class VisualParameters {
         return Objects.hash(color, transparentType, stonePlanes);
     }
 
-    @Override
-    public String toString() {
-        return "VisualParameters{" +
-                "color='" + color + '\'' +
-                ", transparentType=" + transparentType +
-                ", stonePlanes=" + stonePlanes +
-                '}';
-    }
 }
