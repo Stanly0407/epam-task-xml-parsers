@@ -8,7 +8,7 @@ import java.util.Objects;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class SemipreciousStone extends Gem {
 
-    @XmlElement(required = true, name = "weight")
+    @XmlElement(name = "weight")
     private double weight;
 
     @XmlElement(name = "ornamental-type")
