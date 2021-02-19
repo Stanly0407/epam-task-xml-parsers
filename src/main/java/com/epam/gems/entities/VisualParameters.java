@@ -10,13 +10,13 @@ import java.util.Objects;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class VisualParameters {
 
-    @XmlElement(required = true, name = "color")
+    @XmlElement(name = "color")
     private String color;
 
-    @XmlElement(required = true, name = "transparent-type")
+    @XmlElement(name = "transparent-type")
     private TransparentType transparentType;
 
-    @XmlElement(required = true, name = "stone-planes")
+    @XmlElement(name = "stone-planes")
     private int stonePlanes;
 
     public VisualParameters() {

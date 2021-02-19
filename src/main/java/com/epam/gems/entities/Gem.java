@@ -15,13 +15,13 @@ public class Gem {
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     private String certificateNumber;
 
-    @XmlElement(required = true, name = "name")
+    @XmlElement(name = "name")
     private String name;
 
-    @XmlElement(required = true, name = "extraction-place")
+    @XmlElement(name = "extraction-place")
     private String extractionPlace;
 
-    @XmlElement(required = true, name = "visual-parameters")
+    @XmlElement(name = "visual-parameters")
     private VisualParameters visualParameters = new VisualParameters();
 
 

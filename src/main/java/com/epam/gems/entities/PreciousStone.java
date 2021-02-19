@@ -8,10 +8,10 @@ import java.util.Objects;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class PreciousStone extends Gem {
 
-    @XmlElement(required = true, name = "origin-type")
+    @XmlElement(name = "origin-type")
     private OriginType originType;
 
-    @XmlElement(required = true, name = "carats")
+    @XmlElement(name = "carats")
     private double carats;
 
     public PreciousStone(String certificateNumber, String name, String extractionPlace, VisualParameters visualParameters, OriginType originType, double carats) {
