@@ -1,7 +1,6 @@
 package com.epam.gems.parsers;
 
 import com.epam.gems.entities.*;
-import com.epam.gems.exceptions.ParsingGemsException;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -21,84 +20,102 @@ public class DomParser implements Parser {
     private static final Logger LOGGER = Logger.getLogger(DomParser.class);
 
     private List<Gem> gems;
-    private DocumentBuilder documentBuilder;
 
     @Override
     public List<? extends Gem> parse(String xmlFilename) throws ParsingGemsException {
+        LOGGER.info("DomParser starts work");
+
         DomParser domParser = new DomParser();
         domParser.createGemsList(xmlFilename);
         return new ArrayList<>(domParser.getGems());
     }
 
-    public DomParser() throws ParsingGemsException {
+    public DomParser() {
         gems = new ArrayList<>();
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        try {
-            documentBuilder = factory.newDocumentBuilder();
-        } catch (ParserConfigurationException e) {
-            throw new ParsingGemsException("DomParser configuration exception : ", e);
-        }
     }
 
     public List<Gem> getGems() {
         return gems;
     }
 
+
     public void createGemsList(String filename) throws ParsingGemsException {
-        Document document;
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         try {
-            document = documentBuilder.parse(filename);
+            DocumentBuilder documentBuilder = factory.newDocumentBuilder();
+            Document document = documentBuilder.parse(filename);
             Element rootElement = document.getDocumentElement();
-            NodeList preciousStonesList = rootElement.getElementsByTagName("precious-stone");
-            NodeList semipreciousStonesList = rootElement.getElementsByTagName("semiprecious-stone");
+
+            NodeList preciousStonesList = rootElement.getElementsByTagName(GemTags.PRECIOUS_STONE.getValue());
             for (int i = 0; i < preciousStonesList.getLength(); i++) {
                 Element preciousStoneElement = (Element) preciousStonesList.item(i);
                 PreciousStone preciousStone = createPreciousStone(preciousStoneElement);
                 gems.add(preciousStone);
+
+                LOGGER.info("Precious stone - " + preciousStone.getName() +
+                        " (Ser.No: " + preciousStone.getCertificateNumber() + ") - was added to gems list.");
             }
+
+            NodeList semipreciousStonesList = rootElement.getElementsByTagName(GemTags.SEMIPRECIOUS_STONE.getValue());
             for (int i = 0; i < semipreciousStonesList.getLength(); i++) {
                 Element semipreciousStoneElement = (Element) semipreciousStonesList.item(i);
                 SemipreciousStone semipreciousStone = createSemipreciousStone(semipreciousStoneElement);
                 gems.add(semipreciousStone);
+
+                LOGGER.info("Precious stone - " + semipreciousStone.getName() +
+                        " (Ser.No: " + semipreciousStone.getCertificateNumber() + ") - was added to gems list.");
             }
-        } catch (IOException | SAXException e) {
-            throw new ParsingGemsException("Exception during object list creation : ", e);
+
+        } catch (IOException | SAXException | ParserConfigurationException e) {
+            throw new ParsingGemsException("Exception during gems list creation  : ", e);
         }
     }
 
     private PreciousStone createPreciousStone(Element gemElement) {
-        PreciousStone preciousStone = new PreciousStone();
+        PreciousStone preciousStone = new PreciousStone(createCommonGemParameters(gemElement));
 
-        preciousStone.setCertificateNumber(gemElement.getAttribute("certificate-number"));
-        preciousStone.setName(getElementTextContent(gemElement, "name"));
-        preciousStone.setExtractionPlace(getElementTextContent(gemElement, "extraction-place"));
-        VisualParameters visualParameters = new VisualParameters();
-        preciousStone.setVisualParameters(visualParameters);
-        preciousStone.getVisualParameters().setColor(getElementTextContent(gemElement, "color"));
-        preciousStone.getVisualParameters().setTransparentType(TransparentType.valueOf(getElementTextContent(gemElement, "transparent-type")));
-        preciousStone.getVisualParameters().setColor(getElementTextContent(gemElement, "stone-planes"));
-        preciousStone.setOriginType(OriginType.valueOf(getElementTextContent(gemElement, "origin-type")));
-        double carats = Double.parseDouble(getElementTextContent(gemElement, "carats"));
-        preciousStone.setCarat(carats);
+        String originType = getElementTextContent(gemElement, GemTags.ORIGIN_TYPE.getValue());
+        preciousStone.setOriginType(OriginType.valueOf(originType));
+
+        String carats = getElementTextContent(gemElement, GemTags.CARATS.getValue());
+        preciousStone.setCarats(Double.parseDouble(carats));
+
         return preciousStone;
     }
 
     private SemipreciousStone createSemipreciousStone(Element gemElement) {
-        SemipreciousStone semipreciousStone = new SemipreciousStone();
+        SemipreciousStone semipreciousStone = new SemipreciousStone(createCommonGemParameters(gemElement));
 
-        semipreciousStone.setCertificateNumber(gemElement.getAttribute("certificate-number"));
-        semipreciousStone.setName(getElementTextContent(gemElement, "name"));
-        semipreciousStone.setExtractionPlace(getElementTextContent(gemElement, "extraction-place"));
-        VisualParameters visualParameters = new VisualParameters();
-        semipreciousStone.setVisualParameters(visualParameters);
-        semipreciousStone.getVisualParameters().setColor(getElementTextContent(gemElement, "color"));
-        semipreciousStone.getVisualParameters().setTransparentType(TransparentType.valueOf(getElementTextContent(gemElement, "transparent-type")));
-        semipreciousStone.getVisualParameters().setColor(getElementTextContent(gemElement, "stone-planes"));
-        int ornamentalType = Integer.parseInt(gemElement.getAttribute("ornamental-type"));
-        semipreciousStone.setOrnamentalType(ornamentalType);
-        double weight = Double.parseDouble(getElementTextContent(gemElement, "weight"));
-        semipreciousStone.setWeight(weight);
+        String ornamentalType = getElementTextContent(gemElement, GemTags.ORNAMENTAL_TYPE.getValue());
+        semipreciousStone.setOrnamentalType(Integer.parseInt(ornamentalType));
+
+        String weight = getElementTextContent(gemElement, GemTags.WEIGHT.getValue());
+        semipreciousStone.setWeight(Double.parseDouble(weight));
+
         return semipreciousStone;
+    }
+
+    private Gem createCommonGemParameters(Element gemElement) {
+        Gem temporaryStone = new Gem();
+
+        String certificateNumber = gemElement.getAttribute(GemTags.CERTIFICATE_NUMBER.getValue());
+        temporaryStone.setCertificateNumber(certificateNumber);
+
+        temporaryStone.setName(getElementTextContent(gemElement, GemTags.NAME.getValue()));
+
+        temporaryStone.setExtractionPlace(getElementTextContent(gemElement, GemTags.EXTRACTION_PLACE.getValue()));
+
+        temporaryStone.setVisualParameters(new VisualParameters());
+        String color = getElementTextContent(gemElement, GemTags.COLOR.getValue());
+        temporaryStone.getVisualParameters().setColor(color);
+
+        String transparentType = getElementTextContent(gemElement, GemTags.TRANSPARENT_TYPE.getValue());
+        temporaryStone.getVisualParameters().setTransparentType(TransparentType.valueOf(transparentType));
+
+        String stonePlanes = getElementTextContent(gemElement, GemTags.STONE_PLANES.getValue());
+        temporaryStone.getVisualParameters().setStonePlanes(Integer.parseInt(stonePlanes));
+
+        return temporaryStone;
     }
 
     private static String getElementTextContent(Element element, String elementName) {

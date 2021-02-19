@@ -1,11 +1,13 @@
 package com.epam.gems.entities;
 
-import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "VisualParameters", propOrder = {"color", "transparentType", "stonePlanes"})
 public class VisualParameters {
 
     @XmlElement(required = true, name = "color")

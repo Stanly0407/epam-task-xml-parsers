@@ -1,4 +1,4 @@
-package com.epam.gems.exceptions;
+package com.epam.gems.parsers;
 
 public class ParsingGemsException extends Exception {
 

@@ -6,10 +6,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.Objects;
 
 
-@XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Gem",
-        propOrder = {"certificateNumber", "name", "extractionPlace", "visualParameters"})
 @XmlSeeAlso({PreciousStone.class, SemipreciousStone.class})
 public class Gem {
 
@@ -26,6 +23,7 @@ public class Gem {
 
     @XmlElement(required = true, name = "visual-parameters")
     private VisualParameters visualParameters = new VisualParameters();
+
 
     public Gem() {
     }

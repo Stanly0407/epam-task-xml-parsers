@@ -1,13 +1,15 @@
 package com.epam.gems.entities;
 
 import javax.xml.bind.JAXBElement;
-import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElementRef;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.List;
 
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {"gemsStore"})
 @XmlRootElement(namespace = "http://gems.com/gems", name = "gems")
 public class GemsStore {
 
@@ -24,5 +26,4 @@ public class GemsStore {
         }
         return gemsStore;
     }
-
 }

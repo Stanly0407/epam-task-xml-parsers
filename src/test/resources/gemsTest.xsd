@@ -63,14 +63,14 @@
             <extension base="tns:Gem">
                 <sequence>
                     <element name="weight" type="double"/>
+                    <element name="ornamental-type">
+                        <simpleType>
+                            <restriction base="positiveInteger">
+                                <pattern value="[1-3]"/>
+                            </restriction>
+                        </simpleType>
+                    </element>
                 </sequence>
-                <attribute name="ornamental-type" use="optional">
-                    <simpleType>
-                        <restriction base="positiveInteger">
-                            <pattern value="[1-3]"/>
-                        </restriction>
-                    </simpleType>
-                </attribute>
             </extension>
         </complexContent>
     </complexType>

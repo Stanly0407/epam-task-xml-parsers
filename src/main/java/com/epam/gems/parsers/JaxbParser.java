@@ -2,7 +2,6 @@ package com.epam.gems.parsers;
 
 import com.epam.gems.entities.Gem;
 import com.epam.gems.entities.GemsStore;
-import com.epam.gems.exceptions.ParsingGemsException;
 import org.apache.log4j.Logger;
 
 import javax.xml.bind.JAXBContext;
@@ -19,28 +18,27 @@ public class JaxbParser implements Parser {
 
     @Override
     public List<? extends Gem> parse(String xmlFilename) throws ParsingGemsException {
-        LOGGER.debug("JaxbParser starts work");
+        LOGGER.info("JaxbParser starts work");
 
-        JAXBContext jaxbContext;
         try {
-            jaxbContext = JAXBContext.newInstance(JaxbObjectFactory.class);
+            JAXBContext jaxbContext = JAXBContext.newInstance(JaxbObjectFactory.class);
 
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 
             GemsStore gemsStore = (GemsStore) unmarshaller.unmarshal(new File(xmlFilename));
 
-            List<JAXBElement<? extends Gem>> gemsList = gemsStore.getGemsStore();
+            List<JAXBElement<? extends Gem>> jaxbGemsList = gemsStore.getGemsStore();
 
-            List<Gem> gems = new ArrayList<>();
-
-            for (JAXBElement<? extends Gem> g : gemsList) {
-                gems.add(g.getValue());
+            List<Gem> gemsList = new ArrayList<>();
+            for (JAXBElement<? extends Gem> gemJaxbElement : jaxbGemsList) {
+                Gem gem = gemJaxbElement.getValue();
+                gemsList.add(gem);
             }
+            LOGGER.info("Gems list was created successfully");
 
-            return gems;
-
+            return gemsList;
         } catch (JAXBException e) {
-            throw new ParsingGemsException("Exception during object list creation : ", e);  //rename all messages
+            throw new ParsingGemsException("Exception during object list creation : ", e);
         }
     }
 }

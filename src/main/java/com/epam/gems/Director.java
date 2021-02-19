@@ -1,56 +1,36 @@
 package com.epam.gems;
 
 import com.epam.gems.entities.Gem;
-import com.epam.gems.exceptions.ParserTypeException;
-import com.epam.gems.exceptions.ParsingGemsException;
-import com.epam.gems.parsers.*;
+import com.epam.gems.parsers.ParserFactory;
+import com.epam.gems.parsers.ParsingGemsException;
+import com.epam.gems.parsers.XmlValidator;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Director {
-
     private static final Logger LOGGER = Logger.getLogger(Director.class);
 
-    private Parser parser;
     private XmlValidator xmlValidator;
+    private ParserFactory parser;
 
-    public Director(Parser parser, XmlValidator xmlValidator) {
-        this.parser = parser;
+    public Director(XmlValidator xmlValidator, ParserFactory parser) {
         this.xmlValidator = xmlValidator;
+        this.parser = parser;
     }
 
-    private List<? extends Gem> createGemsListFromXmlFile(String xmlFilename, String xsdFilename, String parserType)
-            throws ParserTypeException {
+    public List<? extends Gem> createGemsListFromXmlFile(String xmlFilename) {
         List<? extends Gem> gemsList = new ArrayList<>();
-        ParserType type = ParserType.valueOf(parserType);
+
         try {
-            switch (type) {
-                case JAXB:
-                    parser = new JaxbParser();
-                    break;
-                case SAX:
-                    parser = new SaxParser();
-                    break;
-                case DOM:
-                    parser = new DomParser();
-                    break;
-                default:
-                    throw new ParserTypeException("Unknown parser type");
-            }
-            xmlValidator.setXsdFilename(xsdFilename);
             if (xmlValidator.isValid(xmlFilename)) {
-                gemsList = parser.parse(xmlFilename);
+                gemsList = parser.getParser().parse(xmlFilename);
             }
         } catch (ParsingGemsException e) {
             LOGGER.error(e.getMessage(), e);
         }
         return gemsList;
-    }
-
-    public enum ParserType {
-        SAX, JAXB, DOM
     }
 
 }
