@@ -13,14 +13,20 @@ public class ParserFactoryTest {
 
     @Test
     public void chooseParserTypeShouldReturnJaxbParser() {
+        //when
         expectedParser =  parserFactory.chooseParserType(PARSER_TYPE);
-        Assert.assertTrue(expectedParser instanceof  JaxbParser);
+        boolean isInstanceOfJaxbParser = expectedParser instanceof  JaxbParser;
+        //then
+        Assert.assertTrue(isInstanceOfJaxbParser);
     }
 
     @Test
     public void chooseParserTypeShouldReturnSaxParserAsDefaultParser() {
+        //when
         expectedParser =  parserFactory.chooseParserType(WRONG_PARSER_TYPE);
-        Assert.assertTrue(expectedParser instanceof  SaxParser);
+        boolean isInstanceOfSaxParser = expectedParser instanceof  SaxParser;
+        //then
+        Assert.assertTrue(isInstanceOfSaxParser);
     }
 
 }

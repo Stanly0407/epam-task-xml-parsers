@@ -13,13 +13,17 @@ public class XmlValidatorTest {
 
     @Test
     public void isValidShouldReturnTrue() {
+        //when
         boolean expected = xmlValidator.isValid(XML_FILENAME);
+        //then
         Assert.assertTrue(expected);
     }
 
     @Test
     public void isValidShouldReturnFalse() {
+        //when
         boolean expected = xmlValidator.isValid(WRONG_XML_FILENAME);
+        //then
         Assert.assertFalse(expected);
     }
 
